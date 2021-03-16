@@ -12,11 +12,11 @@ contract HelloWorld {
     }
 }
 
-// Can declare variables inside of functions and it will only be avaiable inside of the
+// Can declare variables inside of functions and it will only be avaiable inside of the local scope
 // When you declare a string var inside a function you need to set its data location to memory
 
 contract HelloWorld {
-    function hello() public returns (string memory) {
+    function hello() public pure returns (string memory) {
         string memory message = "Hello World";
         return message;
     }
