@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.6;
+pragma solidity ^0.7.4;
 
 contract Inbox {
     string public message;
@@ -9,11 +9,11 @@ contract Inbox {
     }
     
     function setMessage(string memory _newMessage) public {
-        message = _newMessage;
+        message = _newMessage; // changes the blockchain
     }
     
     // function getMessage() public view returns (string memory) {
-    //     return message;
+    //     return message; Doesn't change anything
     // }
 }
 
