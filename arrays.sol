@@ -13,7 +13,8 @@ contract myContract {
     }
 }
 
-// Contract    Ω?.,Aj   z
+// decoded output : addNumber 10 >> getNumber >> int256: 10
+// { "0": "int256: 10" }  
 
 // ================================================================================
 
@@ -28,8 +29,10 @@ contract myArrayContract {
         return numbers;
     }
 }
-// Arrays are a collection /list of values/elementss in one single data structure
+// decoded output : { "0": "int256[]: 2,21,42,7,18" } 
 
-//    - In Solidity Arrays are declared with [], like JS, but in Solidity
-//     the brackets go after the type
-//    - Version 6.0 ^ allows for returning Arrays
+
+// Arrays are a collection /list of values/elementss in one single data structure
+//  - In Solidity Arrays are declared with [], like JS, but in Solidity
+//      the brackets go after the type
+//  - Version 6.0 ^ allows for returning Arrays
