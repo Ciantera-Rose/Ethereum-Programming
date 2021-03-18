@@ -23,11 +23,14 @@ contract Bank {
 
     // send funds to another account
     function transfer(address recipient, uint256 amount) public {
-        require(balance[msg.sender] >= amount);
-        require(msg.sender != recipient);
+        require(balance[msg.sender] >= amount, "Balance not sufficient");
+        require(msg.sender != recipient, "Cannot transfer funds to yourself");
+
+        uint256 previousSenderBalance = balance[msg.sender]; // save prev bal before transfer
+        // event logs and further checks
 
         _transfer(msg.sender, recipient, amount);
-
+        assert(balance[msg.sender] == previousSenderBalance - amount); //
         // event logs and further checks
     }
 
