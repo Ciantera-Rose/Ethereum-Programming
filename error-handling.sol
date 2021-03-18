@@ -7,12 +7,16 @@ contract Bank {
     mapping(address => uint256) balance;
     address owner;
 
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _; // run the function
+    }
+
     constructor() {
         owner = msg.sender;
     }
 
-    function addBalance(uint256 _toAdd) public returns (uint256) {
-        require(msg.sender == owner); // only account owner can add balance
+    function addBalance(uint256 _toAdd) public onlyOwner returns (uint256) {
         balance[msg.sender] += _toAdd; // updatesd balance
         return balance[msg.sender];
     }
@@ -78,6 +82,11 @@ contract Bank {
                     
         Invariants : - A concept
                      - A condition that is always true at a particular point in our code
-
+     
+        Modifiers : - Allows us to separate and reuse logic that we are going to use at multiple
+                      places in our contract
+                    - Like a small function that always runs at the beginning of a real function
+                      (a tiny function we can place before running the real function code)
+                    - Reduces usage of duplicate code
 
 */
