@@ -23,6 +23,17 @@ contract Bank {
         return balance[msg.sender];
     }
 
+    function withdraw(uint256 amount) public returns (uint256) {
+        require(
+            balance[msg.sender] >= amount,
+            "Withdraw amount exceeds available funds."
+        );
+        balance[msg.sender] -= amount;
+        msg.sender.transfer(amount);
+
+        return balance[msg.sender];
+    }
+
     function getBalance() public view returns (uint256) {
         return balance[msg.sender];
     }
@@ -51,9 +62,8 @@ contract Bank {
 /* 
      Paybale Functions : 
             - Smart contracts can natively handle money
-            - Accept money into our Functions
-            - Send, transfer, withdraw, keep track of money bten diff addresses in ETH 
+            - Accept money into Functions
+            - Send, transfer, withdraw, keep track of money between diff addresses in ETH 
             - payable : allows people to receive money when people call it 
-            - 
 
 */
