@@ -7,7 +7,18 @@ import "./ownable.sol";
 // When Bank contract is deployed it will run constructor of ownable contract
 // Reuse code for multiple contracts by importing it
 
+interface GovernmentInterface {
+    function addTransaction(
+        address _from,
+        address _to,
+        uint256 _amount
+    ) external;
+}
+
 contract Bank is Ownable {
+    GovernmentInterface governmentInstance =
+        GovernmentInterface(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4);
+
     mapping(address => uint256) balance;
 
     event depositDone(uint256 amount, address indexed depositedTo);
@@ -33,6 +44,10 @@ contract Bank is Ownable {
         return balance[msg.sender];
     }
 
+    function getOwner() public view returns (address) {
+        return owner;
+    }
+
     function transfer(address recipient, uint256 amount) public {
         require(balance[msg.sender] >= amount, "Balance not sufficient");
         require(msg.sender != recipient, "Cannot transfer funds to yourself");
@@ -40,6 +55,8 @@ contract Bank is Ownable {
         uint256 previousSenderBalance = balance[msg.sender];
 
         _transfer(msg.sender, recipient, amount);
+
+        governmentInstance.addTransaction(msg.sender, recipient, amount);
 
         assert(balance[msg.sender] == previousSenderBalance - amount);
     }
@@ -58,5 +75,17 @@ contract Bank is Ownable {
      Inheritance : 
            - Parent Contract (base contract)
            - Child contract (the child inherits from the parent)
+           - Reduces code duplication
+           - Creates clear code structure
            
+           - Internal visibility level : 
+               - public : function/variaable is available for anyone to query or execute
+               - private : function/variable can only be executed from within the contract itself
+               
+               - internal : -cannot access it from outside contract environment
+                            -can be accessed from any contract that is inheriting from 
+                            
+      External Contracts : - a contract that is deployed to the blockchain that is completely
+                              separate from ours
+
 */
