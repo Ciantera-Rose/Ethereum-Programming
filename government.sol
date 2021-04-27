@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.5;
+pragma solidity ^0.7.0;
 
 /* 
     This contract will save reports of what the bank contract is doing

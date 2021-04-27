@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.7.4;
+pragma solidity 0.7.5;
 
 // Write a function is solidity and return HelloWorld
 // To get a response from the contract we need to write functions that return a statement
