@@ -58,6 +58,36 @@ contract StorageDesign_Array {
     }
 } //END StorageDesign_Array
 
+// Use only Mapping :
+contract StorageDesign_Mapping {
+    struct Entity {
+        uint256 data;
+        address _address;
+    }
+
+    mapping(address => Entity) EntityMap;
+
+    // Creates a new entity for msg.sender and adds it to the mapping.
+    // @uint _data, value that will be added
+    function addEntity(uint256 _data) public returns (bool success) {
+        EntityMap[msg.sender].data = _data;
+        EntityMap[msg.sender]._address = msg.sender;
+        return true;
+    }
+
+    // Updates the data in a saved entity for msg.sender
+    // @uint _data, value that will be updated
+    function updateEntity(uint256 _data) public returns (bool success) {
+        EntityMap[msg.sender].data = _data;
+        return true;
+    }
+
+    // Just to validate data after update values.
+    function getEntityMap() public view returns (uint256, address) {
+        return (EntityMap[msg.sender].data, EntityMap[msg.sender]._address);
+    }
+} //END StorageDesign_Mapping
+
 /*
 
 Array :
@@ -69,5 +99,10 @@ Array For loop:
 Deployment Execution Cost : 314355 gas
 addEntity Execution Cost : 	43407 gas | 47607 gas | 47607 gas | 47607 gas | 47607 gas 
 updateEntity Execution Cost : 	23959 gas | 11716 gas | 14473 gas | 17230 gas | 19987 gas 
+
+Mapping :
+Deployment Execution Cost : 292131 gas
+addEntity Execution Cost : 	23422 gas | 42622 gas | 42622 gas | 42622 gas | 42622 gas 
+updateEntity Execution Cost : 21682 gas | 5717 gas | 1517 gas | 5717 gas | 	5717 gas 
 
 */
