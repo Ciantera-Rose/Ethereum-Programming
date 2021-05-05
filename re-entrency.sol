@@ -81,5 +81,35 @@ contract test2 {
         }
     }
 }
+
 // This pattern needs to be implemented in both functions in order to not be exploited by this attack
 // However Send and transfer only transfer a limited amount of gas to the fallback funcition (but that's not good enough)
+
+/* 
+    - ie: DAO Hack: 1st big hack that happened to a smart contract (re-entreny attack)
+    - Send and transfer were introduced with a 2300 gas stipend in which the fallback
+      function could execute logic up to that stipend amount
+
+    - msg.sender.call.value(amount)(") >> dangerous
+    - This only works if we don't change the gas costs or what operations cost >>not reliable
+    - EIP1884
+
+    - USE .call{value: toTransfer}("");
+    - Can call a fucnction or no function at all, can scall a value etc...
+    - (bool success,) : returns two things >> if call was successful or not and bytes memory data (left empty)
+ */
+
+contract test3 {
+    mapping(address => uint256) balance;
+
+    function withdraw() public {
+        // re-enter
+        require(balance[msg.sender] > 0); // CHECKS >> fallback comes in again but fails if balance > 0
+        uint256 toTransfer = balance[msg.sender]; // save 10 ETH to variable
+        balance[msg.sender] = 0; // EFFECTS // set balance to 0
+        (bool success, ) = msg.sender.call{value: toTransfer}(""); // INTERACTIONS // call and tranfer 10 ETH
+        if (!success) {
+            balance[msg.sender] = toTransfer; //
+        }
+    }
+}
